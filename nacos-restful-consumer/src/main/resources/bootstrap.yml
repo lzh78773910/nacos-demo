@@ -1,0 +1,60 @@
+server:
+  port: 56020
+
+#配置服务提供方的地址（ip和端口）
+provider:
+  address: 127.0.0.1:56010
+#
+spring:
+  application:
+    name: nacos-restful-consumer #服务名
+  main:
+    allow-bean-definition-overriding: true # Spring Boot 2.1 需要设定
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848  #服务发现中心地址
+        namespace: a4bea1bb-a91e-41fc-9385-c094b4cf3277
+#        namespace: f5eec3c1-4f05-40cd-964a-c8d44f342ab4 #指定命名空间的id
+      config:
+        server-addr: 127.0.0.1:8848  #配置中心地址
+        file-extension: yaml  #指定配置文件的扩展名，配置文件名称根据application.name的名称加扩展名拼装，为nacos-restful-consumer.yaml
+#        ext-config[0]: #扩展配置   角标越高,优先级越高,相同属性主配置文件优先
+#          data-id: ext-config-common01.yaml
+#          group: COMMON_GROUP
+#          refresh: true   #自动刷新
+#        ext-config[1]:
+#          data-id: ext-config-common02.yaml
+#          group: COMMON_GROUP
+#          refresh: true
+        ext-config[0]:
+          data-id: ext-config-http.yaml
+          group: COMMON_GROUP
+          refresh: true
+#
+#
+#
+nacos-restful-provider:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+
+#
+##HTTP格式配置
+#spring:
+#  http:
+#    encoding:
+#      charset: UTF‐8
+#      force: true
+#      enabled: true
+#  messages:
+#encoding: UTF‐8
+##tomcat头信息和访问路径配置
+#server:
+#  tomcat:
+#    remote_ip_header: x‐forwarded‐for
+#    protocol_header: x‐forwarded‐proto
+#  servlet:
+#    context‐path: /a
+#  use‐forward‐headers: true
+
